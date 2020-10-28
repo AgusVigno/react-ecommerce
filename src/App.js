@@ -1,24 +1,18 @@
 import React from 'react';
-import CustomNavBar from './components/CustomNavBar';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from "./react.png";
+
+import Home from './components/Home.js';
+import CustomNavBar from './components/CustomNavBar.js';
 
 function App() {
+  const message = "Curso de ReactJS - CoderHouse";
   
-  const styles = {
-    width: 300
-  }
-
-
   return (
     <div className="App">
       <CustomNavBar />
-      <h1 style={{marginTop:50, marginBottom: 70}}>Curso de React.JS - CoderHouse</h1>
-      <img 
-        src={logo}
-        alt="imagen de react"
-        style={styles}
+      <Home 
+        message={message}
       />
     </div>
   );

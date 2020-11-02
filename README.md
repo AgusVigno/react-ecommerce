@@ -5,9 +5,9 @@ Proyecto realizado en ReactJS utilizando [Create React App](https://github.com/f
 * ** *** **** ***** **** *** ** * 
 
 En esta etapa se realizó:
-* Creacion de componentes.
-* Utilización de Bootstrap.
+* Creacion de componente <ItemCount />.
 * Utilización de props para pasar datos entre componentes.
+* Para probar la comunicación, al agregar al carrito se imprime en consola el número de productos seleccionados en el contador!
 
 * ** *** **** ***** **** *** ** * 
 

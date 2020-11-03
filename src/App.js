@@ -5,15 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './components/Home.js';
 import CustomNavBar from './components/CustomNavBar.js';
 
-function App() {
-  const message = "Curso de ReactJS - CoderHouse";
-  
+function App() {  
   return (
     <div className="App">
       <CustomNavBar />
-      <Home 
-        message={message}
-      />
+      <Home />
     </div>
   );
 }

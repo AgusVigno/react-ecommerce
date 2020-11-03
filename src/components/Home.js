@@ -1,21 +1,10 @@
 import React from 'react';
-import ItemCount from './ItemCount';
+import ItemList from './ItemList';
 
-const Home = (props) => {
-  
-  const addToCart = (count) => {
-    console.log('Desde Home, agregar al carrito: ', count);
-  }
-
+const Home = () => {
   return ( 
     <div>
-      <h1 style={{marginTop:50, marginBottom: 70}}>{props.message}</h1>
-      <ItemCount 
-        initial={1}
-        min={0}
-        max={5}
-        addToCart={addToCart}
-      />
+      <ItemList />
     </div>
   );
 }

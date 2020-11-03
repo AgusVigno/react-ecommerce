@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import imagenProducto from '../images/curso.jpg';
+
 
 const ItemCount = (props) => {
 
@@ -37,17 +37,15 @@ const ItemCount = (props) => {
 
   const styles = {
     contenedor: {
-      border: '1px solid #e1e1e1',
-      margin: '30px auto 0 auto',
-      width: '600px',
+      margin: '15px auto 0 auto',
+      width: '300px',
       padding: '10px',
       color: '#000',
-      backgroundColor: '#e1e1e1'
     },
     boton: {
       width: '300px',
       display: 'block',
-      margin: '20px auto',
+      margin: '0 auto 15px auto',
       padding: '10px',
       backgroundColor: '#fff',
       borderRadius: 10,
@@ -60,6 +58,7 @@ const ItemCount = (props) => {
       backgroundColor: '#FFF',
       borderRadius: 10,
       padding: '5px',
+      marginBottom: '15px',
       alignItems: 'center'
     },
     contadorBotones: {
@@ -77,13 +76,6 @@ const ItemCount = (props) => {
   return ( 
     <>
       <div style={styles.contenedor}>
-        <img 
-          src={imagenProducto}
-          style={styles.imagen}
-          alt="imagen producto"
-        />
-        <p>Curso de ReactJS, donde aprenderás los conceptos básicos hasta los más avanzados !!</p>
-
         <div style={styles.contador}>
           <button 
             onClick={() => decrementItem()}

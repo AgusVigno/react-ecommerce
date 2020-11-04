@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import Spinner from './Sppinner';
+import Spinner from './Spinner';
 import Item from './Item';
 import imgCurso from '../images/curso.jpg';
 import imgCurso1 from '../images/curso1.jpg';

@@ -1,13 +1,12 @@
 import React from 'react';
 import Layout from './Layout';
-import ItemList from './ItemList';
 
-const Home = () => {
+const Cart = () => {
   return ( 
     <Layout>
-      <ItemList />
+      <h1 className="titulo">Página del Carrito de Compras</h1>
     </Layout>
   );
 }
  
-export default Home;
+export default Cart;

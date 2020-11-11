@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 
-
 const ItemCount = (props) => {
 
   const [item, setItem] = useState({
+    id: null,
     count: 0,
     max: null,
     min: null,
@@ -11,6 +11,7 @@ const ItemCount = (props) => {
 
   useEffect(() => {
     setItem({
+      id: props.id,
       count: props.initial,
       max: props.max,
       min: props.min
@@ -35,64 +36,18 @@ const ItemCount = (props) => {
     }
   }
 
-  const styles = {
-    contenedor: {
-      margin: '15px auto 0 auto',
-      width: '300px',
-      padding: '10px',
-      color: '#000',
-    },
-    boton: {
-      width: '300px',
-      display: 'block',
-      margin: '0 auto 15px auto',
-      padding: '10px',
-      backgroundColor: '#fff',
-      borderRadius: 10,
-      borderColor: '#497cff',
-      color: '#497cff'
-    },
-    contador: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      backgroundColor: '#FFF',
-      borderRadius: 10,
-      padding: '5px',
-      marginBottom: '15px',
-      alignItems: 'center'
-    },
-    contadorBotones: {
-      backgroundColor: '#FFF',
-      border: 'none',
-      color: '#497cff',
-      fontSize: '30px'
-    },
-    imagen: {
-      width: '400px',
-      margin: '10px auto',
-    }
-  }
-
   return ( 
-    <>
-      <div style={styles.contenedor}>
-        <div style={styles.contador}>
-          <button 
-            onClick={() => decrementItem()}
-            style={styles.contadorBotones}
-          >-</button>
-          <span style={{fontWeight:'700', fontSize: '20px'}}>{item.count}</span>
-          <button 
-            onClick = {() => incrementItem()}
-            style={styles.contadorBotones}
-          >+</button>
-        </div>
+    <div className="producto__contador">
+      <div className="producto__contador-contador">
+        <button onClick={() => decrementItem()}>-</button>
+        <span>{item.count}</span>
+        <button onClick = {() => incrementItem()}>+</button>
       </div>
       <button 
-        style={styles.boton}
+        className="producto__contador-btn"
         onClick={() => props.addToCart(item.count)}
       >Agregar al Carrito</button>
-    </>
+    </div>
   );
 }
  

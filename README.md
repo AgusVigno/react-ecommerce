@@ -5,11 +5,12 @@ Proyecto realizado en ReactJS utilizando [Create React App](https://github.com/f
 * ** *** **** ***** **** *** ** * 
 
 En esta etapa se realizó:
-* Creacion de componentes: ItemDetailContainer e ItemDetail.
-* Utilización de props para pasar datos entre componentes.
-* Simulación de consulta en API, con setTimeout de 3 segundos.
-* Utilización de Hooks, useState, useEffect.
-* Para probar la comunicación, al agregar al carrito se imprime en consola el número de productos seleccionados en el contador! y al presionar Comprar, imprime en consola "Realizando Compra..."
+* Creacion de Layout (que contiene el Header y Footer), para re-utilizar en diferentes vistas.
+* Simulación de consulta a API de productos en el home, tardando .5 segundos (con un Spinner de carga)
+* Utilización de Hooks, useState, useEffect, useParams.
+* Para probar la comunicación, al agregar al carrito se imprime en consola el número de productos seleccionados en el contador para ese producto! y al presionar Comprar, imprime en consola "Realizando Compra..."
+* Los productos se encuentran en un archivo de constantes para ser re-utilizados en diferentes componentes.
+* Se utilizo el componente NavLink para la navegación con react-router-dom
 
 * ** *** **** ***** **** *** ** * 
 

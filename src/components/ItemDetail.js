@@ -11,7 +11,7 @@ const ItemDetail = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState({});
-
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -21,7 +21,7 @@ const ItemDetail = () => {
     });
     setLoading(false);
     // eslint-disable-next-line
-  }, [id]);
+  }, [id, count]);
 
   const addToCart = (count) => {
     console.log('Se agrego al carrito, cantidad: ', count);
@@ -30,6 +30,11 @@ const ItemDetail = () => {
   const toBuy = () => {
     console.log('Realizando la compra...');
   }
+
+  // const updateCount = (num) => {
+  //   console.log('update ', num);
+  //   setCount(num);
+  // }
 
   return (
     <Layout>
@@ -44,15 +49,15 @@ const ItemDetail = () => {
           />
           <div className="producto__comprar">
             <ItemCount
-              initial= {0}
               max= {item.stock}
               min= {0}
               addToCart={addToCart}
+              setCount={setCount}
             />
             <button 
               className="producto__boton"
               onClick={() => toBuy()}  
-            >Comprar</button>
+            >Comprar {count > 0 && count}</button>
           </div>
         </>
       }

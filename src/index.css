@@ -95,6 +95,13 @@ a {
 .titulo{
   margin: 4rem auto;
 }
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0; 
+}
 
 /* Home */
 .producto__detalle{
@@ -156,14 +163,15 @@ a {
   padding: 10px
 }
 .producto__comprar{
-  display: flex;
+  display: block;
   justify-content: space-between;
   align-items: center;
-  width: 400px;
+  width: 50rem;
   margin: 0 auto;
 }
 .producto__contador{
   display: flex;
+  justify-content: center;
 }
 .producto__contador-contador{
   display: flex;
@@ -171,11 +179,15 @@ a {
   width: 100px;
   align-items: center;
 }
+.producto__contador-span{
+  width: 5rem;
+  padding: 1rem;
+}
 .producto__contador-contador button{
   background-color: #FFF;
   border: none;
   color: #497cff;
-  font-size: 30px;
+  font-size: 4rem;
 }
 .producto__contador-btn{
   width: 190px;

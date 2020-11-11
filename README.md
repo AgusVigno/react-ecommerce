@@ -5,12 +5,8 @@ Proyecto realizado en ReactJS utilizando [Create React App](https://github.com/f
 * ** *** **** ***** **** *** ** * 
 
 En esta etapa se realizó:
-* Creacion de Layout (que contiene el Header y Footer), para re-utilizar en diferentes vistas.
-* Simulación de consulta a API de productos en el home, tardando .5 segundos (con un Spinner de carga)
-* Utilización de Hooks, useState, useEffect, useParams.
-* Para probar la comunicación, al agregar al carrito se imprime en consola el número de productos seleccionados en el contador para ese producto! y al presionar Comprar, imprime en consola "Realizando Compra..."
-* Los productos se encuentran en un archivo de constantes para ser re-utilizados en diferentes componentes.
-* Se utilizo el componente NavLink para la navegación con react-router-dom
+* En el detalle de un producto, se comunicó el componente del Contador, para que al incrementar o decrementar el numero establecido entre el (minimo y maximo configurado), se visualice en tiempo real junto al texto del boton comprar, ubicado en otro componente!
+* Se dejaron unicamente los NavLink en el menu de navegacion, ya que es el unico lugar donde se aprovecha la ventaja de los estilos al conocer la pagina actuar con el componente {NavLink}, el resto se reemplazaron por {Link}, ambos de la libreria "react-router-dom".
 
 * ** *** **** ***** **** *** ** * 
 

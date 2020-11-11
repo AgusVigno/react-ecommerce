@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Item = (props) => {
   return (
@@ -12,13 +12,13 @@ const Item = (props) => {
         <p className="producto__titulo">{props.product.name}</p>
         <p className="producto__descripcion">{props.product.description}</p>
         <p className="producto__precio">$ {props.product.price}</p>
-        <NavLink 
+        <Link 
           to= {!props.isDetail ? `/item/${props.product.id}` : '/'}
         >
           <button
             className="producto__detalle-btn"
           > {!props.isDetail ? 'Ver Detalle' : 'Listado de Productos'}</button>
-        </NavLink>
+        </Link>
       </div>
   </li> 
    );

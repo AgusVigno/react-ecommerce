@@ -4,35 +4,32 @@ const ItemCount = (props) => {
 
   const [item, setItem] = useState({
     id: null,
-    count: 0,
     max: null,
     min: null,
   });
+  const [contador, setContador] = useState(0);
 
   useEffect(() => {
     setItem({
       id: props.id,
-      count: props.initial,
       max: props.max,
       min: props.min
     });
   }, [props]);
 
   const incrementItem = () => {
-    if(item.count < item.max){
-      setItem({
-        ...item,
-        count: item.count + 1
-      })
+    const newCount = contador + 1;
+    if(newCount <= item.max){
+      setContador(newCount);
+      props.setCount(newCount);
     }
   }
 
   const decrementItem = () => {
-    if(item.count > item.min){
-      setItem({
-        ...item,
-        count: item.count - 1
-      })
+    const newCount = contador - 1;
+    if(newCount >= item.min){
+      setContador(newCount);
+      props.setCount(newCount);
     }
   }
 
@@ -40,12 +37,15 @@ const ItemCount = (props) => {
     <div className="producto__contador">
       <div className="producto__contador-contador">
         <button onClick={() => decrementItem()}>-</button>
-        <span>{item.count}</span>
+        <span
+          className="producto__contador-span">
+          {contador}
+        </span>
         <button onClick = {() => incrementItem()}>+</button>
       </div>
       <button 
         className="producto__contador-btn"
-        onClick={() => props.addToCart(item.count)}
+        onClick={() => props.addToCart(contador)}
       >Agregar al Carrito</button>
     </div>
   );

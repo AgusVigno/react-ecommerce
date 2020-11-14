@@ -11,14 +11,22 @@ const Item = (props) => {
       <div>
         <p className="producto__titulo">{props.product.name}</p>
         <p className="producto__descripcion">{props.product.description}</p>
-        <p className="producto__precio">$ {props.product.price}</p>
-        <Link 
-          to= {!props.isDetail ? `/item/${props.product.id}` : '/'}
-        >
-          <button
-            className="producto__detalle-btn"
-          > {!props.isDetail ? 'Ver Detalle' : 'Listado de Productos'}</button>
-        </Link>
+        {
+          props.cart ?
+            <>
+              <p className="producto_cuenta">{props.product.count} x ${props.product.price}</p>
+              <h2 className="producto__precio">Total:  $ {props.product.price * props.product.count}</h2>
+            </>
+          :
+          <Link 
+            to= {!props.isDetail ? `/item/${props.product.id}` : '/'}
+          >
+            <p className="producto__precio">$ {props.product.price}</p>
+            <button
+              className="producto__detalle-btn"
+            > {!props.isDetail ? 'Ver Detalle' : 'Listado de Productos'}</button>
+          </Link>
+        }
       </div>
   </li> 
    );

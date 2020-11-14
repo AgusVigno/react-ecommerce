@@ -1,10 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { useParams } from 'react-router-dom';
+import {productsData} from '../const/Products';
+import {CartContext} from '../context/cartContext';
+import Alerta from '../components/Alerta';
 import Layout from './Layout';
+import Spinner from './Spinner';
 import Item from './Item';
 import ItemCount from './ItemCount';
-import Spinner from './Spinner';
-import {productsData} from '../const/Products';
 
 const ItemDetail = () => {
 
@@ -12,33 +14,30 @@ const ItemDetail = () => {
   const [loading, setLoading] = useState(false);
   const [item, setItem] = useState({});
   const [count, setCount] = useState(0);
+  const cartContext = useContext(CartContext);
+  const [alert, setAlert] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    productsData.forEach(product => {
-      // eslint-disable-next-line
-      product.id == id && setItem(product);
-    });
-    setLoading(false);
     // eslint-disable-next-line
+    setItem(productsData.find(product => product.id == id));
+    setLoading(false);
   }, [id, count]);
 
-  const addToCart = (count) => {
-    console.log('Se agrego al carrito, cantidad: ', count);
-  }
-
   const toBuy = () => {
-    console.log('Realizando la compra...');
+    if(count > 0){ 
+      cartContext.addToCart(item, count);
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 2000);
+    }
   }
-
-  // const updateCount = (num) => {
-  //   console.log('update ', num);
-  //   setCount(num);
-  // }
 
   return (
     <Layout>
       <h1 className="titulo">Detalle del Producto</h1>
+      { alert && <Alerta /> }
       {
         loading ?
         <Spinner /> :
@@ -51,12 +50,12 @@ const ItemDetail = () => {
             <ItemCount
               max= {item.stock}
               min= {0}
-              addToCart={addToCart}
               setCount={setCount}
             />
             <button 
               className="producto__boton"
-              onClick={() => toBuy()}  
+              onClick={() => toBuy()}
+              disabled={count === 0}  
             >Comprar {count > 0 && count}</button>
           </div>
         </>

@@ -5,8 +5,11 @@ Proyecto realizado en ReactJS utilizando [Create React App](https://github.com/f
 * ** *** **** ***** **** *** ** * 
 
 En esta etapa se realizó:
-* En el detalle de un producto, se comunicó el componente del Contador, para que al incrementar o decrementar el numero establecido entre el (minimo y maximo configurado), se visualice en tiempo real junto al texto del boton comprar, ubicado en otro componente!
-* Se dejaron unicamente los NavLink en el menu de navegacion, ya que es el unico lugar donde se aprovecha la ventaja de los estilos al conocer la pagina actuar con el componente {NavLink}, el resto se reemplazaron por {Link}, ambos de la libreria "react-router-dom".
+* Al hacer click en comprar, se guarda en el carrito el producto y la cantidad seleccionada.
+* Al agregar cualquier producto en el carrito, se incrementa la cantidad de elementos en el icono del carrito.
+* Se deshabilito el boton de comprar cuando la cantidad seleccionada sea 0.
+* Se listan los productos del carrito, visualiznado cantidades y montos parciales y finales.
+* Se agrego un alerta avisando que se agrego correctamente el producto al carrito.
 
 * ** *** **** ***** **** *** ** * 
 

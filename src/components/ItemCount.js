@@ -35,18 +35,12 @@ const ItemCount = (props) => {
 
   return ( 
     <div className="producto__contador">
-      <div className="producto__contador-contador">
-        <button onClick={() => decrementItem()}>-</button>
-        <span
-          className="producto__contador-span">
-          {contador}
-        </span>
-        <button onClick = {() => incrementItem()}>+</button>
-      </div>
-      <button 
-        className="producto__contador-btn"
-        onClick={() => props.addToCart(contador)}
-      >Agregar al Carrito</button>
+      <button onClick={() => decrementItem()}>-</button>
+      <span
+        className="producto__contador-span">
+        {contador}
+      </span>
+      <button onClick = {() => incrementItem()}>+</button>
     </div>
   );
 }

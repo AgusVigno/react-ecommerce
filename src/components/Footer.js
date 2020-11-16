@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import Navegation from './Navegation';
+import Navigation from './Navigation';
 
 
 const Footer = () => {
@@ -10,7 +10,7 @@ const Footer = () => {
     <>
       <div className="container">
         <footer className="navbar">
-          <Navegation />
+          <Navigation />
 
           <Link to='/'><h1>Logo Aquí</h1></Link>
         </footer>

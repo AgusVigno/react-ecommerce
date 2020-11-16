@@ -9,7 +9,8 @@ export const productsData = [
     price: 1000,
     image: imgCurso,
     description: "Con este curso podrás aprender desde lo básico, hasta los conocimientos mas avanzados, construyendo aplicaciones reales.",
-    stock: 10
+    stock: 10,
+    categoryKey: 'frontend'
   }, 
   {
     id: 2,
@@ -17,7 +18,8 @@ export const productsData = [
     price: 500,
     image: imgCurso1,
     description: "Comienza aprendiendo lo básico de HTML, CSS y JS, contruyendo tu propio sitio web.",
-    stock: 15
+    stock: 15,
+    categoryKey: 'backend'
   }, 
   {
     id: 3,
@@ -25,6 +27,7 @@ export const productsData = [
     price: 800,
     image: imgCurso2,
     description: "Perfecciona esta increíble tecnología Frontend, aplicando los conocimientos en proyectos reales y personalizados.",
-    stock: 7
+    stock: 7,
+    categoryKey: 'frontend'
   }
 ];

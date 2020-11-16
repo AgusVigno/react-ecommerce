@@ -5,11 +5,10 @@ Proyecto realizado en ReactJS utilizando [Create React App](https://github.com/f
 * ** *** **** ***** **** *** ** * 
 
 En esta etapa se realizó:
-* Al hacer click en comprar, se guarda en el carrito el producto y la cantidad seleccionada.
-* Al agregar cualquier producto en el carrito, se incrementa la cantidad de elementos en el icono del carrito.
-* Se deshabilito el boton de comprar cuando la cantidad seleccionada sea 0.
-* Se listan los productos del carrito, visualiznado cantidades y montos parciales y finales.
-* Se agrego un alerta avisando que se agrego correctamente el producto al carrito.
+* Al agregar productos al carrito, y hacer hover, se muestra un resumen de lo agregado.
+* Se configuro el registro de usuarios mediante Firebase, con correo y password.
+* Se configuro el login de usuarios, modificando el NavBar dependiendo si el usuarios se encuentra logueado o no.
+* Se habilita el boton de "Realizar Pago", unicamente si el usuario esta logueado o si ingresa todos los campos requeridos.
 
 * ** *** **** ***** **** *** ** * 
 

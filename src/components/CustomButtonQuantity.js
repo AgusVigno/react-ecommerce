@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-const ItemCount = (props) => {
+const CustomButtonQuantity = (props) => {
 
   const [item, setItem] = useState({
     id: null,
@@ -45,4 +45,4 @@ const ItemCount = (props) => {
   );
 }
  
-export default ItemCount;
+export default CustomButtonQuantity;

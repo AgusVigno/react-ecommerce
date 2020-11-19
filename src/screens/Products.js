@@ -4,7 +4,6 @@ import firebase, { FirebaseContext } from '../firebase';
 import Layout from '../components/Layout';
 import Error from '../components/Error';
 
-
 const Products = ({history}) => {
   const categoryContext = useContext(CategoryContext);
   const {user} = useContext(FirebaseContext);
@@ -48,17 +47,22 @@ const Products = ({history}) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    setError(validateSubmit());
-    !error && createProduct();
+    const empty = validateSubmit();
+    setError(empty > 0);
+    !error && empty === 0 && createProduct();
   }
 
   const validateSubmit = () => {
-    return (product.name === '' || product.price === '' || product.description === '' || product.image === '' || product.stock === '' || product.categoryId === '');
+    let empty = 0;
+    Object.keys(product).forEach( key => {
+      return product[key] === '' ? empty++ : empty +=0;
+    });
+    return empty;
   }
 
   const handleUploadFile = (event) => {
     const file = event.target.files[0];
-    const storageRef = firebase.storage.ref(`images/${file.name}`);
+    const storageRef = firebase.storage.ref(`images/${product.creator.id}-${product.created}-${file.name}`);
     const task = storageRef.put(file);
 
     task.on('state_changed', (snapshot) => {
@@ -76,8 +80,7 @@ const Products = ({history}) => {
   
   const createProduct= () => {
     try {
-      console.log("Crear Firebase");
-      console.log(product);
+      console.log("Control de consulta API - Carga Producto");
       firebase.db.collection('products').add(product);
       setProduct(STATE_INITIAL);
       history.push('/');
@@ -124,13 +127,16 @@ const Products = ({history}) => {
                 id="categoryId"
                 name="categoryId"
                 onChange={handleChange}
+                defaultValue={"default"}
               > 
                 {
                   categoryContext && categoryContext.categories.map(category => (
-                    <option key={category.id} value={category.id}>{category.name}</option>
+                    <option 
+                      key={category.id} 
+                      value={category.id}
+                    >{category.name}</option>
                   ))
                 }
-                <option value="" disabled selected>--Seleccione--</option>
               </select>
             </div>
             <div className="campo">

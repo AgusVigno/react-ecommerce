@@ -7,6 +7,10 @@ import CartIcon from './CartIcon';
 const Header = () => {
   const {user, firebase} = useContext(FirebaseContext);
 
+  const logout = () => {
+    firebase.logout();
+  }
+
   return ( 
     <div className="container">
       <header className="navbar">
@@ -21,7 +25,7 @@ const Header = () => {
                 <p>Hola: {user.displayName}</p>
                 <CartIcon />
                 <button
-                  onClick={() => firebase.logout()}
+                  onClick={logout}
                 >Cerrrar Sesión</button>
               </div>
             ) : (

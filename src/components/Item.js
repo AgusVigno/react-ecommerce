@@ -1,32 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Item = (props) => {
+const Item = ({product, cart, isDetail}) => {
   return (
     <li className="producto__detalle">
       <img 
-        src={props.product.image}
+        src={product.image}
         alt="imagen de producto"
       />
-      <div>
-        <p className="producto__titulo">{props.product.name}</p>
-        <p className="producto__descripcion">{props.product.description}</p>
+      <div className="producto__info">
+        <p className="producto__titulo">{product.name}</p>
+        <p className="producto__descripcion">{product.description}</p>
         {
-          props.cart ?
-            <>
-              <p className="producto_cuenta">{props.product.count} x ${props.product.price}</p>
-              <h2 className="producto__precio">Total:  $ {props.product.price * props.product.count}</h2>
-            </>
-          :
-          <Link 
-            to= {!props.isDetail ? `/item/${props.product.id}` : '/'}
-          >
-            <p className="producto__precio">$ {props.product.price}</p>
-            <button
-              className="producto__detalle-btn"
-            > {!props.isDetail ? 'Ver Detalle' : 'Listado de Productos'}</button>
-          </Link>
-        }
+          cart 
+            ? <>
+                <p className="producto_cuenta">{product.count} x ${product.price}</p>
+                <h2 className="producto__precio">Total:  $ {product.price * product.count}</h2>
+              </>
+            : <div className="producto__data"> 
+                <p className="producto__precio">$ {product.price}</p> 
+                <Link 
+                  to= {!isDetail ? `/item/${product.id}` : '/'}
+                >
+                  <button
+                    className="producto__detalle-btn"
+                  > {!isDetail ? 'Ver Detalle' : 'Listado de Productos'}</button>
+                </Link>
+              </div>
+          }
       </div>
   </li> 
    );

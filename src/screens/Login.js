@@ -1,10 +1,54 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import firebase from '../firebase';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 import Layout from '../components/Layout';
 import Error from '../components/Error';
+import Copyright from '../components/Copyright';
+
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', 
+    marginTop: theme.spacing(1),
+    fontSize: '1rem',
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#2c3e50',
+    color: '#FFF',
+    padding: '1rem',
+    '&:hover':{
+      backgroundColor: '#1D3B58',
+      fontWeight: 'bold'
+    }
+  }
+}));
 
 const Login = ({history}) => {
+  const classes = useStyles();
+  
   const STATE_INITIAL = {
     password: '',
     email: ''
@@ -18,8 +62,10 @@ const Login = ({history}) => {
       setUser(STATE_INITIAL);
       history.push('/');
     } catch (error) {
-      console.log("Error: ", error);
-      setError(error.message);
+      setError("Usuario y/o contraseña incorrectos.");
+      setTimeout(() => {
+        setError(false)
+       }, 2000);
     }
   }
 
@@ -30,53 +76,98 @@ const Login = ({history}) => {
     });
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    login();
+  const validateInputs = () => {
+    return (user.email !== '' && user.password !== '');
   }
 
-  return ( 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if(validateInputs()){
+      login();
+    } else{
+      setError("Los campos son obligatorios");
+      setTimeout(() => {
+        setError(false)
+       }, 2000);
+    }
+  }
+
+  return (
     <Layout>
-      <>
-        <h1 className="titulo">Iniciar Sesión</h1>
-        <form className="formulario"
-          onSubmit={handleSubmit}
-        >
-          <div className="campo">
-            <label htmlFor="email">Correo</label>
-            <input
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Iniciar Sesión
+          </Typography>
+          <form 
+            className={classes.form} 
+            noValidate
+            onSubmit={handleSubmit}  
+          >
+            <TextField
+              variant="outlined"
+              margin="normal"
               required
-              type="email"
+              fullWidth
               id="email"
-              placeholder="ingresar correo..."
+              label="Correo electrónico"
               name="email"
+              autoComplete="email"
+              autoFocus
               value={user.email}
               onChange={handleChange}
             />
-          </div>
-          <div className="campo">
-            <label htmlFor="password">Password</label>
-            <input
+            <TextField
+              variant="outlined"
+              margin="normal"
               required
+              fullWidth
+              name="password"
+              label="Contraseña"
               type="password"
               id="password"
-              placeholder="ingresar password..."
-              name="password"
+              autoComplete="current-password"
               value={user.password}
               onChange={handleChange}
             />
-          </div>
-          {error && <Error message={error} />}
-          <input
-            className="formulario__submit"
-            type="submit"
-            value="Iniciar sesión"
-          />
-        </form>
-        <p className="formulario__parrafo">¿No tenés cuenta? <Link to="/register"><span>Registrate!</span></Link></p>
-      </>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Recordarme"
+            />
+            {error && <Error message={error} />}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="default"
+              className={classes.submit}
+            >
+              Iniciar Sesión
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link to="/" style={{color: 'black'}}>
+                  ¿Olvidaste la contraseña?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link to="/register" style={{color: 'black'}}>
+                  {"¿No tenes cuenta? Regístrate"}
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+        <Box mt={8}>
+          <Copyright />
+        </Box>
+      </Container>
     </Layout>
-   );
+  );
 }
- 
+
 export default Login;

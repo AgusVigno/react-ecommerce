@@ -15,12 +15,12 @@ const Cart = () => {
         ? <>
             <h2>No agregaste ningun producto al carrito.</h2>
             <Link to={'/'}>
-              <button className="producto__detalle-btn cart__btn">
+              <button className="cart__products-button">
                 Listado de Productos
               </button>
             </Link> 
           </>
-        : <ul>
+        : <ul className="cart__list">
             {
               cartContext.cart.map( product => (
                 <Item 
@@ -32,7 +32,7 @@ const Cart = () => {
             <div className="cart__total">
               <p>Total: $<strong>{cartContext.total}</strong></p>
               <Link to="/cart/checkout">
-                <button>Comprar</button>
+                <button>Checkout</button>
               </Link>
             </div>
           </ul>

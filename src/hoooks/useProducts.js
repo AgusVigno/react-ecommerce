@@ -7,6 +7,7 @@ const useProducts = (categoryId) => {
 
   useEffect(() => {
     const getProducts = () => {
+      console.log("Control de consulta API");
       categoryId 
         ? firebase.db.collection('products').where('categoryId', '==', categoryId).onSnapshot(handleSnapshot)
         : firebase.db.collection('products').onSnapshot(handleSnapshot);

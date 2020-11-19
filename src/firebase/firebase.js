@@ -19,7 +19,7 @@ class Firebase {
         const newUser = await this.auth.createUserWithEmailAndPassword(user.email, user.password);
 
         return await newUser.user.updateProfile({
-            displayName : user.name
+            displayName : `${user.name} ${user.lastName}`
         })
     }
 

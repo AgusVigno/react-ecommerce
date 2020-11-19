@@ -1,176 +1,190 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useState, useContext, useEffect} from 'react';
 import { FirebaseContext } from '../firebase';
-import {CartContext} from '../context/cartContext';
+import AddressForm from '../components/checkout/AddressForm';
+import PaymentForm from '../components/checkout/PaymentForm';
+import Review from '../components/checkout/Review';
 import Layout from '../components/Layout';
+import Copyright from '../components/Copyright';
 import Error from '../components/Error';
+import { makeStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Paper from '@material-ui/core/Paper';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
-const Checkout = ({history}) => {
-  const cartContext = useContext(CartContext);
+
+const useStyles = makeStyles((theme) => ({
+  appBar: {
+    position: 'relative',
+  },
+  layout: {
+    width: 'auto',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+      width: 600,
+      marginLeft: 'auto',
+      marginRight: 'auto',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3),
+    },
+  },
+  stepper: {
+    padding: theme.spacing(3, 0, 5),
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    marginTop: theme.spacing(3),
+    marginLeft: theme.spacing(1),
+  },
+}));
+
+const Checkout = () => {
+  const classes = useStyles();
   const {user} = useContext(FirebaseContext);
   const STATE_INITIAL = {
     name: '',
     lastName: '',
+    address: '',
     email: '',
+    emailRepeat: '',
     tel: '',
-    password: '',
-    passwordRepeat: '',
+    country: '',
   };
-  const [disabled, setDisabled] = useState(true);
+  const [activeStep, setActiveStep] = useState(0);
+  const [completeForm, setCompleteForm] = useState(false);
   const [visitor, setVisitor] = useState(STATE_INITIAL);
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
+  const steps = ['Dirección de envío', 'Detalles del pago', 'Revisa tu orden'];
 
   useEffect(() => {
-    cartContext.cartSize === 0 &&
-      history.push('/');
-  }, [history, cartContext]);
+    // cartContext.cartSize === 0 &&
+    //   history.push('/');
+  }, []);
+
+  const handleBlur = event => {
+    event.preventDefault();
+    const validate = validateCompleteForm();
+    setCompleteForm(validate);
+    console.log(validate);
+    setVisitor({
+      ...visitor, [event.nativeEvent.target.name]: event.nativeEvent.target.defaultValue 
+    });
+  }
 
   const handleChange = event => {
     event.preventDefault();
     setVisitor({
-      ...visitor, [event.target.name]: event.target.value
+      ...visitor, [event.target.name]: event.target.value 
     });
   }
-  
-  const handleBlur = event => {
-    setError(event.nativeEvent.target.defaultValue === '');
-    setDisabled(disabledSubmit());
-  }
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    setError(disabledSubmit());
-    !error && buy();
-  }
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+    activeStep === 2 && buy();
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
 
   const buy = () => {
-    setDisabled(true);
+    console.log("Firebase generar compra");
     setVisitor(STATE_INITIAL);
-    console.log("Realizar Compra");
   }
 
-  const disabledSubmit = () => {
-    return (visitor.name === '' || visitor.lastName === '' || visitor.email === '' || visitor.tel === '' || 
-      visitor.password === '' || visitor.password !== visitor.passwordRepeat);
+  const validateCompleteForm = () => {
+    return (visitor.name !== '' && visitor.lastName !== '' && visitor.email !== '' && visitor.tel !== '' && visitor.address !== '' && visitor.emailRepeat === visitor.email);
   }
 
-  return ( 
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <AddressForm 
+                  visitor={visitor}
+                  handleBlur={handleBlur} 
+                  handleChange={handleChange} 
+                />;
+      case 1:
+        return <PaymentForm />;
+      case 2:
+        return <Review 
+                  visitor={visitor}
+                  cash={true}
+                />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
+
+  return (
     <Layout>
-      <h1 className="titulo">Checkout</h1>
-      <div className="checkout__container">
-        <ul >
-          {
-            cartContext.cart && cartContext.cart.map(product => (
-              <li key={product.id} className="checkout__detail">
-                <p className="checkout__detail-name">{product.name}</p>
-                <p className="checkout__detail-price">{product.count} x ${product.price}</p>
-                <p className="checkout__detalle-subtotal">${product.count * product.price}</p>
-              </li>
-            ))
-          }
-          <li className="checkout__total">Total: <span>${cartContext.total}</span></li>
-        </ul>
-        {
-          user 
-          ? <div className="checkout__login">
-              <p className="checkout__cuenta">Comprar con la cuenta: <span>{user.email}</span></p>
-              <button 
-                className="checkout__submit"
-                onClick={handleSubmit}
-              >Realizar Pago</button>
-            </div>
-          : <> 
-              <p className="checkout__text">Completa los siguientes datos para realizar la compra</p>
-              <form className="formulario__checkout"
-                onSubmit={handleSubmit}
-              >
-                <div className="campo">
-                  <input
-                    required
-                    type="text"
-                    id="name"
-                    placeholder="Tu nombre (*)"
-                    name="name"
-                    value={visitor.name}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </div> 
-                <div className="campo">
-                  <input
-                    required
-                    type="text"
-                    id="lastName"
-                    placeholder="Tu apellido (*)"
-                    name="lastName"
-                    value={visitor.lastName}
-                    onChange={handleChange}
-                  />
-                </div>             
-                <div className="campo">
-                  <input
-                    required
-                    type="email"
-                    id="email"
-                    placeholder="Tu correo (*)"
-                    name="email"
-                    value={visitor.email}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
+      <CssBaseline />
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>
+          <Typography component="h1" variant="h4" align="center">
+            Checkout
+          </Typography>
+          <Stepper activeStep={activeStep} className={classes.stepper}>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <>
+            {activeStep === steps.length ? (
+              <>
+                <Typography variant="h5" gutterBottom>
+                  Muchas Gracias por tu compra.
+                </Typography>
+                <Typography variant="subtitle1">
+                  Su número de orden de compra es: 2001539. Hemos enviado la confirmación de su pedido por correo electrónico y
+                  le enviaremos una actualización cuando se haya enviado su pedido.
+                </Typography>
+              </>
+            ) : (
+              <>
+                {getStepContent(activeStep)}
+                <div className={classes.buttons}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} className={classes.button}>
+                      Anterior
+                    </Button>
+                  )}
+                  {error && <Error message={error} />}
+                  <Button
+                    disabled={!completeForm}
+                    variant="contained"
+                    color="primary"
+                    onClick={handleNext}
+                    className={classes.button}
+                  >
+                    {activeStep === steps.length - 1 ? 'Realizar pedido' : 'Siguiente'}
+                  </Button>
                 </div>
-                <div className="campo">
-                  <input
-                    required
-                    type="tel"
-                    id="tel"
-                    placeholder="Tu teléfono (*)"
-                    name="tel"
-                    value={visitor.tel}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="campo">
-                  <input
-                    required
-                    type="password"
-                    id="password"
-                    placeholder="Tu contraseña (*)"
-                    name="password"
-                    value={visitor.password}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </div>              
-                <div className="campo">
-                  <input
-                    required
-                    type="password"
-                    id="passwordRepeat"
-                    placeholder="Repetir contraseña (*)"
-                    name="passwordRepeat"
-                    value={visitor.passwordRepeat}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </div>
-                {error && <Error message={"Los campos (*) son obligatorios"} />}
-
-                <input
-                  disabled={disabled}
-                  className="checkout__submit"
-                  type="submit"
-                  value="Realizar Pago"
-                  onSubmit={handleSubmit}
-                />
-              </form>
-              <p className="checkout__input-login">¿Ya tenés cuenta? <Link to="/login"><span> Iniciar Sesión</span></Link></p>
-            </>
-        
-        }
-      </div> 
+              </>
+            )}
+          </>
+        </Paper>
+        <Copyright />
+      </main>
     </Layout>
   );
 }
- 
+
 export default Checkout;

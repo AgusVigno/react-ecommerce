@@ -10,6 +10,7 @@ export default function CategoryProvider({ defaultValue = [], children}){
 
   useEffect(() => {
     const getCategories = () => {
+      console.log("Control de consulta API - Categorias.");
       firebase.db.collection("categories").orderBy('order', 'asc').onSnapshot(handleSnapshot)
     }
     getCategories();

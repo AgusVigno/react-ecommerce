@@ -18,10 +18,7 @@ const Navegacion = () => {
           <ul className="submenu">
             {categories && categories.map(category => (
               <li key={category.id}>
-                <NavLink 
-                  to={`/category/${category.key}`}
-                  activeClassName="pagina-actual"
-                >
+                <NavLink to={`/category/${category.key}`}>
                   {category.name}
                 </NavLink>
               </li>

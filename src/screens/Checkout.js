@@ -1,5 +1,5 @@
-import React, {useState, useContext, useEffect} from 'react';
-import { FirebaseContext } from '../firebase';
+import React, {useState, useEffect} from 'react';
+// import { FirebaseContext } from '../firebase';
 import AddressForm from '../components/checkout/AddressForm';
 import PaymentForm from '../components/checkout/PaymentForm';
 import Review from '../components/checkout/Review';

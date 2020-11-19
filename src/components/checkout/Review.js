@@ -1,6 +1,6 @@
 import React, {useEffect, useContext} from 'react';
 import { CartContext } from '../../context/cartContext';
-import { FirebaseContext } from '../../firebase';
+// import { FirebaseContext } from '../../firebase';
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -27,7 +27,6 @@ const Review = ({visitor, cash, payment}) => {
   const cartContext = useContext(CartContext);
 
   useEffect(() => {
-    console.log(cartContext.cart);
 
   }, []);
   

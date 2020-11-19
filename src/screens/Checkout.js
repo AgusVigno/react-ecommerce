@@ -5,7 +5,7 @@ import PaymentForm from '../components/checkout/PaymentForm';
 import Review from '../components/checkout/Review';
 import Layout from '../components/Layout';
 import Copyright from '../components/Copyright';
-import Error from '../components/Error';
+// import Error from '../components/Error';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Checkout = () => {
   const classes = useStyles();
-  const {user} = useContext(FirebaseContext);
+  // const {user} = useContext(FirebaseContext);
   const STATE_INITIAL = {
     name: '',
     lastName: '',
@@ -68,7 +68,7 @@ const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [completeForm, setCompleteForm] = useState(false);
   const [visitor, setVisitor] = useState(STATE_INITIAL);
-  const [error, setError] = useState(false);
+  // const [error, setError] = useState(false);
   const steps = ['Dirección de envío', 'Detalles del pago', 'Revisa tu orden'];
 
   useEffect(() => {
@@ -166,7 +166,7 @@ const Checkout = () => {
                       Anterior
                     </Button>
                   )}
-                  {error && <Error message={error} />}
+                  {/* {error && <Error message={error} />} */}
                   <Button
                     disabled={!completeForm}
                     variant="contained"

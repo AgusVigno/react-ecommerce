@@ -8,7 +8,7 @@ const Home = () => {
 
   return ( 
     <Layout>
-      <main>
+      <main class="container">
         <h1 className="titulo">Listado de Productos</h1>
         <ItemList products={getAllProducts()} />
       </main>

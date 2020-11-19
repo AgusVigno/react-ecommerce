@@ -7,11 +7,11 @@ const Footer = () => {
 
   return ( 
     <div className="footer">
-      <div className="container">
-        <footer className="navbar">
+      <div className="navbar">
+        <footer className="container container__footer">
           <Navigation />
 
-          <Link to='/'><h1>Logo Aquí</h1></Link>
+          <Link to='/'><h1>TuLugar</h1></Link>
         </footer>
       </div>
       <p className="copyrigth">Todos los derechos reservados. &copy; TuLugar {year} </p>

@@ -48,20 +48,23 @@ a {
 }
 div#root{
   min-height: 100vh;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /* Header */
-.container{
+.navbar{
   background-color: rgb(44,62,80);
   padding: 1rem;
 }
-.navbar{
+.container{
   max-width: 1200px;
   margin: 0 auto;
 }
 @media (min-width: 768px){
-  .navbar{
+  .container__header,
+  .container__footer{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -263,7 +266,7 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 1rem;
 }
 .producto__titulo {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: 700;;
   text-align: center;;
   text-transform: uppercase;

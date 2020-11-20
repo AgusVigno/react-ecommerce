@@ -18,6 +18,7 @@ import Error from '../components/Error';
 import Copyright from '../components/Copyright';
 import iconGoogle from '../images/iconGoogle.png';
 import iconFacebook from '../images/iconFacebook.jpg';
+import iconGithub from '../images/iconGithub.jpg';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -123,6 +124,19 @@ const Login = ({history}) => {
     }
   }
 
+  const onClickLoginWithGithub = async () => {
+    try {
+      await firebase.loginWithGithub();
+      setUser(STATE_INITIAL);
+      history.push('/');
+    } catch (error) {
+      setError("Ocurrió un error");
+      setTimeout(() => {
+        setError(false)
+        }, 2000);
+    }
+  }
+
   return (
     <Layout>
       <Container component="main" maxWidth="xs">
@@ -204,6 +218,12 @@ const Login = ({history}) => {
           onClick={onClickLoginWithFacebook}
         >Login con Facebook
           <img src={iconFacebook} alt="imagen facebook"/>
+        </button>
+        <button
+          className="login__redes-btn github"
+          onClick={onClickLoginWithGithub}
+        >Login con GitHub
+          <img src={iconGithub} alt="imagen github"/>
         </button>
         <Box mt={8}>
           <Copyright />

@@ -223,7 +223,13 @@ input[type=number]::-webkit-outer-spin-button {
   margin-left: 3rem;
 }
 .facebook{
-  margin: 0;
+  margin: 0 0 .5rem 0;
+}
+.github{
+  margin: 0 0 .5rem 0;
+}
+.login__redes-btn.github img {
+  width: 3rem;
 }
 
 /* Home */
@@ -833,9 +839,6 @@ input[type=number]::-webkit-outer-spin-button {
   color: #FFF;
   text-align: center;
   margin-top: 0;
-}
-.contact__form{
-
 }
 .contact__form-newsletter{
   margin: 1rem auto;

@@ -34,6 +34,11 @@ class Firebase {
     async loginWithFacebook() {
         const provider = new app.auth.FacebookAuthProvider();
         return this.auth.signInWithPopup(provider);
+		}
+		
+    async loginWithGithub() {
+        const provider = new app.auth.GithubAuthProvider();
+        return this.auth.signInWithPopup(provider);
     }
 
     async logout() {

@@ -8,7 +8,7 @@ const Copyrigth = ({classes}) => {
       variant="body2" 
       color="textSecondary" 
       align="center" 
-      style={{marginBottom: '14rem'}}
+      style={{marginBottom: '5rem'}}
       className={classes}
     >
       {'Todos los derechos reservados. Copyright ' } &copy;

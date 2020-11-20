@@ -1,6 +1,7 @@
 import React from 'react';
 import Item from './Item';
 import Spinner from './Spinner';
+import CustomPagination from './CustomPagination';
 
 const ItemList = ({products}) => {
   return ( 
@@ -8,7 +9,8 @@ const ItemList = ({products}) => {
     {
       !products
         ? <Spinner />
-        : <ul className="products__containter">
+        : <>
+          <ul className="products__containter">
             {
               products.length > 0 
                 ? products.map(product => (
@@ -23,6 +25,8 @@ const ItemList = ({products}) => {
                   </div>
             }
           </ul>
+          <CustomPagination />
+        </>
     }
     </div>
   );

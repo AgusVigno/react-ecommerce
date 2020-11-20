@@ -168,13 +168,6 @@ div#root{
 }
 
 /* Footer */
-.footer{
-  /* position: absolute;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  width: 100%; */
-}
 .copyrigth{
   text-align: center;
   background-color: rgb(33,44,55);
@@ -337,7 +330,10 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 1.8rem;
   text-align: center;
 }
-
+.pagination{
+  width: 40rem;
+  margin: 2rem auto 5rem auto
+}
 
 /* Category */
 .title__category{

@@ -2,6 +2,7 @@ import React from 'react';
 import Item from './Item';
 import Spinner from './Spinner';
 import CustomPagination from './CustomPagination';
+import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 
 const ItemList = ({products}) => {
   return ( 
@@ -10,23 +11,29 @@ const ItemList = ({products}) => {
       !products
         ? <Spinner />
         : <>
-          <ul className="products__containter">
+            <ul className="products__containter">
+              {
+                products.length > 0 
+                ? (
+                    products.map(product => (
+                      <Item
+                        key={product.id}
+                        product={product}
+                      />
+                    ))
+                  )
+                : (  
+                    <div className="products__noproduct">
+                      <ReportProblemOutlinedIcon />
+                      <p>No se encontraron productos</p>
+                    </div>
+                ) 
+              }
+            </ul>
             {
-              products.length > 0 
-                ? products.map(product => (
-                  <Item
-                    key={product.id}
-                    product={product}
-                  />
-                ))
-                : <div className="category__noproduct">
-                    <h2>Icono Aquí</h2>
-                    <h2>Ningún producto para la categoría</h2>
-                  </div>
+              products.length > 0 && <CustomPagination />
             }
-          </ul>
-          <CustomPagination />
-        </>
+          </>
     }
     </div>
   );

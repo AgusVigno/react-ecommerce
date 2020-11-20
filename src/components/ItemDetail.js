@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { useParams } from 'react-router-dom';
+import firebase from '../firebase';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 import {CartContext} from '../context/cartContext';
-import { ProductsContext } from '../context/productsContext';
 import Layout from './Layout';
 import Spinner from './Spinner';
 import Item from './Item';
@@ -11,7 +12,6 @@ import CustomButtonQuantity from './CustomButtonQuantity';
 const ItemDetail = ({history}) => {
   const { id } = useParams();
   const cartContext = useContext(CartContext);
-  const {getProductById} = useContext(ProductsContext);
 
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
@@ -20,22 +20,28 @@ const ItemDetail = ({history}) => {
 
   useEffect(() => {
     if(id){
+      console.log("Control de API - Producto por ID.");
       setLoading(true);
-      Promise.resolve(getProductById(id))
-        .then(product => {
-          if(!product){
-            setError(true);
-            return
-          }
-          return setProduct(product)
-        }).catch(error => {
-          console.log("Error: ", error);
+      const itemCollection = firebase.db.collection('products');
+      const item = itemCollection.doc(id);
+      item.get().then(doc => {
+        if(!doc.exists){
           setError(true);
-        }).finally(() => {
-          setLoading(false);
-        })
+          return
+        }
+        return setProduct({
+          id: doc.id,
+          ...doc.data()
+        });
+      }).catch(error => {
+        setError(true);
+        console.log("Error: ", error);
+      }).finally(() => {
+        setLoading(false);
+      });
+    }else{
+      setError(true);
     }
-    // eslint-disable-next-line
   }, [id]);
 
   const toBuy = () => {
@@ -54,9 +60,9 @@ const ItemDetail = ({history}) => {
         : <>
             {
               error 
-              ? <div>
-                  <h2>Icono Aquí</h2>
-                  <h3>No se encontro el producto solicitado.</h3>
+              ? <div className="products__noproduct">
+                  <ReportProblemOutlinedIcon />
+                  <p>No se encontraron productos</p>
                 </div>
               : <div className="product__detail">
                   <Item

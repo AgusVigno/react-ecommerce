@@ -27,9 +27,14 @@ export default function CartProvider({ defaultValue = [], children}){
     setCart([...cart, {...product, count: count}]);
   }
 
+  const reset = () => {
+    setCart(defaultValue);
+    setCartSize(0);
+    setTotal(0);
+  }
 
   return (
-    <CartContext.Provider value={{cart, addToCart, isInCart, cartSize, total}}>
+    <CartContext.Provider value={{cart, addToCart, isInCart, cartSize, total, reset}}>
       {children}
     </CartContext.Provider>
   )

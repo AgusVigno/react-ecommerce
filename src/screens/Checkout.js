@@ -1,11 +1,12 @@
-import React, {useState, useEffect} from 'react';
-// import { FirebaseContext } from '../firebase';
+import React, {useState, useContext} from 'react';
+import firebase from '../firebase';
+import { FirebaseContext } from '../firebase';
+import { CartContext } from '../context/cartContext';
 import AddressForm from '../components/checkout/AddressForm';
 import PaymentForm from '../components/checkout/PaymentForm';
 import Review from '../components/checkout/Review';
 import Layout from '../components/Layout';
 import Copyright from '../components/Copyright';
-// import Error from '../components/Error';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -51,11 +52,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  account: {
+    fontSize: '1.2rem',
+    marginTop: '1rem',
+    marginBottom: '1rem'
+  }
 }));
 
 const Checkout = () => {
   const classes = useStyles();
-  // const {user} = useContext(FirebaseContext);
+  const {user} = useContext(FirebaseContext);
+  const cartContext = useContext(CartContext);
+
   const STATE_INITIAL = {
     name: '',
     lastName: '',
@@ -65,16 +73,12 @@ const Checkout = () => {
     tel: '',
     country: '',
   };
+
   const [activeStep, setActiveStep] = useState(0);
   const [completeForm, setCompleteForm] = useState(false);
   const [visitor, setVisitor] = useState(STATE_INITIAL);
-  // const [error, setError] = useState(false);
   const steps = ['Dirección de envío', 'Detalles del pago', 'Revisa tu orden'];
-
-  useEffect(() => {
-    // cartContext.cartSize === 0 &&
-    //   history.push('/');
-  }, []);
+  const [orderId, setOrderId] = useState(null);
 
   const handleBlur = event => {
     event.preventDefault();
@@ -95,16 +99,32 @@ const Checkout = () => {
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
-    activeStep === 2 && buy();
+    activeStep === 2 && createOrder();
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
-  const buy = () => {
-    console.log("Firebase generar compra");
-    setVisitor(STATE_INITIAL);
+  const createOrder = async () => {
+    const order = {
+      client: visitor,
+      userId: user ? user.uid : '',
+      products: cartContext.cart,
+      countProducts: cartContext.cartSize,
+      total: cartContext.total,
+      date: new Date(),
+    }
+    try {
+      console.log("Control de consulta API - Crear Orden");
+      const response = (await firebase.db.collection('orders').add(order)).id
+      setVisitor(STATE_INITIAL);
+      setOrderId(response);
+      cartContext.reset();
+      setActiveStep(3);
+    } catch (error) {
+      console.log("Error: ", error);
+    }
   }
 
   const validateCompleteForm = () => {
@@ -127,7 +147,7 @@ const Checkout = () => {
                   cash={true}
                 />;
       default:
-        throw new Error('Unknown step');
+        throw new Error('Etapa desconocida');
     }
   }
 
@@ -139,45 +159,73 @@ const Checkout = () => {
           <Typography component="h1" variant="h4" align="center">
             Checkout
           </Typography>
-          <Stepper activeStep={activeStep} className={classes.stepper}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+          {
+            user 
+              ? (
+                <Typography component="p" align="center" className={classes.account}>
+                  Comprar con la cuenta: {user.email}
+                </Typography>
+              )
+              : (
+                <Stepper activeStep={activeStep} className={classes.stepper}>
+                  {steps.map((label) => (
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
+                    </Step>
+                  ))}
+                </Stepper>
+              )
+          }
           <>
             {activeStep === steps.length ? (
               <>
                 <Typography variant="h5" gutterBottom>
                   Muchas Gracias por tu compra.
                 </Typography>
-                <Typography variant="subtitle1">
-                  Su número de orden de compra es: 2001539. Hemos enviado la confirmación de su pedido por correo electrónico y
+                <Typography variant="subtitle1" className="cart__order">
+                  Su número de orden de compra es: <span>{orderId}</span>. Hemos enviado la confirmación de su pedido por correo electrónico y
                   le enviaremos una actualización cuando se haya enviado su pedido.
                 </Typography>
               </>
             ) : (
-              <>
-                {getStepContent(activeStep)}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Anterior
-                    </Button>
-                  )}
-                  {/* {error && <Error message={error} />} */}
-                  <Button
-                    disabled={!completeForm}
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Realizar pedido' : 'Siguiente'}
-                  </Button>
-                </div>
-              </>
+              user 
+                ? (
+                  <>
+                    {getStepContent(2)}
+                    <div className={classes.buttons}>  
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={createOrder}
+                        className={classes.button}
+                      >
+                        Realizar pedido
+                      </Button>
+                    </div>
+                  </>
+                )
+                : (
+                  <>
+                    {getStepContent(activeStep)}
+                    <div className={classes.buttons}>
+                      {activeStep !== 0 && (
+                        <Button onClick={handleBack} className={classes.button}>
+                          Anterior
+                        </Button>
+                      )}
+                      {/* {error && <Error message={error} />} */}
+                      <Button
+                        disabled={!completeForm}
+                        variant="contained"
+                        color="primary"
+                        onClick={handleNext}
+                        className={classes.button}
+                      >
+                        {activeStep === steps.length - 1 ? 'Realizar pedido' : 'Siguiente'}
+                      </Button>
+                    </div>
+                  </>
+                )
             )}
           </>
         </Paper>

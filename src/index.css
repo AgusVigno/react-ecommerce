@@ -200,6 +200,32 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 1rem auto 0 auto;
 }
 
+/* Login */
+.login__redes-btn{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #FFF;
+  margin: 2.5rem 0 .5rem;
+  padding: .5rem;
+  font-size: 1.2rem;
+  background-color: #2c3e50;
+  text-transform: uppercase;
+}
+.login__redes-btn:hover{
+  font-weight: bold;
+  background-color: #1D3B58;
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+}
+.login__redes-btn img{
+  width: 2rem;
+  margin-left: 3rem;
+}
+.facebook{
+  margin: 0;
+}
+
 /* Home */
 .products__containter{
   width: 120rem;
@@ -303,7 +329,7 @@ input[type=number]::-webkit-outer-spin-button {
 .producto__contador{
   display: flex;
   justify-content: center;
-  width: 100px;
+  width: 10rem;
   align-items: center;
 }
 .producto__contador-span{
@@ -315,6 +341,7 @@ input[type=number]::-webkit-outer-spin-button {
   border: none;
   color: #497cff;
   font-size: 4rem;
+  outline: none
 }
 .producto__contador-btn{
   width: 190px;
@@ -333,6 +360,19 @@ input[type=number]::-webkit-outer-spin-button {
 .pagination{
   width: 40rem;
   margin: 2rem auto 5rem auto
+}
+.products__noproduct{
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.products__noproduct .MuiSvgIcon-root{
+  font-size: 5rem;
+}
+.products__noproduct p{
+  font-size: 2rem;
 }
 
 /* Category */
@@ -507,6 +547,10 @@ input[type=number]::-webkit-outer-spin-button {
 .cart__list .cart__total{
   margin: 2rem auto 5rem auto;
   font-size: 1.5rem;
+}
+.cart__order span{
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 /* Checkout */

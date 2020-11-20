@@ -16,7 +16,8 @@ import Container from '@material-ui/core/Container';
 import Layout from '../components/Layout';
 import Error from '../components/Error';
 import Copyright from '../components/Copyright';
-
+import iconGoogle from '../images/iconGoogle.png';
+import iconFacebook from '../images/iconFacebook.jpg';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -43,6 +44,10 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: '#1D3B58',
       fontWeight: 'bold'
     }
+  },
+  loginGoogle: {
+    marginTop: '2rem',
+    marginLeft: '35%',
   }
 }));
 
@@ -89,6 +94,32 @@ const Login = ({history}) => {
       setTimeout(() => {
         setError(false)
        }, 2000);
+    }
+  }
+
+  const onClickLoginWithGoogle = async () => {
+    try {
+      await firebase.loginWithGoogle();
+      setUser(STATE_INITIAL);
+      history.push('/');
+    } catch (error) {
+      setError("Ocurrió un error");
+      setTimeout(() => {
+        setError(false)
+        }, 2000);
+    }
+  }
+
+  const onClickLoginWithFacebook = async () => {
+    try {
+      await firebase.loginWithFacebook();
+      setUser(STATE_INITIAL);
+      history.push('/');
+    } catch (error) {
+      setError("Ocurrió un error");
+      setTimeout(() => {
+        setError(false)
+        }, 2000);
     }
   }
 
@@ -162,6 +193,18 @@ const Login = ({history}) => {
             </Grid>
           </form>
         </div>
+        <button
+          className="login__redes-btn"
+          onClick={onClickLoginWithGoogle}
+        >Login con Google
+          <img src={iconGoogle} alt="imagen google"/>
+        </button>
+        <button
+          className="login__redes-btn facebook"
+          onClick={onClickLoginWithFacebook}
+        >Login con Facebook
+          <img src={iconFacebook} alt="imagen facebook"/>
+        </button>
         <Box mt={8}>
           <Copyright />
         </Box>

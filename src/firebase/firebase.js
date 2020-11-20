@@ -2,7 +2,6 @@ import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
-
 import firebaseConfig from './config';
 
 class Firebase {
@@ -25,6 +24,16 @@ class Firebase {
 
     async login(email, password) {
         return this.auth.signInWithEmailAndPassword(email, password);
+    }
+
+    async loginWithGoogle() {
+        const provider = new app.auth.GoogleAuthProvider();
+        return this.auth.signInWithPopup(provider);
+    }
+
+    async loginWithFacebook() {
+        const provider = new app.auth.FacebookAuthProvider();
+        return this.auth.signInWithPopup(provider);
     }
 
     async logout() {

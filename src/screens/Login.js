@@ -100,7 +100,8 @@ const Login = ({history}) => {
 
   const onClickLoginWithGoogle = async () => {
     try {
-      await firebase.loginWithGoogle();
+      const resp = await firebase.loginWithGoogle();
+      console.log("res:", resp);
       setUser(STATE_INITIAL);
       history.push('/');
     } catch (error) {
@@ -113,7 +114,9 @@ const Login = ({history}) => {
 
   const onClickLoginWithFacebook = async () => {
     try {
-      await firebase.loginWithFacebook();
+      const resp = await firebase.loginWithFacebook();
+      console.log("res:", resp);
+
       setUser(STATE_INITIAL);
       history.push('/');
     } catch (error) {
@@ -126,7 +129,8 @@ const Login = ({history}) => {
 
   const onClickLoginWithGithub = async () => {
     try {
-      await firebase.loginWithGithub();
+      const resp = await firebase.loginWithGithub();
+      console.log("res:", resp);
       setUser(STATE_INITIAL);
       history.push('/');
     } catch (error) {

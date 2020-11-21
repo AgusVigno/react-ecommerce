@@ -28,19 +28,16 @@ class Firebase {
 
     async loginWithGoogle() {
         const provider = new app.auth.GoogleAuthProvider();
-        console.log("Provider", provider);
         return this.auth.signInWithPopup(provider);
     }
 
     async loginWithFacebook() {
         const provider = new app.auth.FacebookAuthProvider();
-        console.log("Provider", provider);
         return this.auth.signInWithPopup(provider);
 		}
 		
     async loginWithGithub() {
         const provider = new app.auth.GithubAuthProvider();
-        console.log("Provider", provider);
         return this.auth.signInWithPopup(provider);
     }
 

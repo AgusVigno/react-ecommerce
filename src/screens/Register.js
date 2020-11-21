@@ -80,7 +80,6 @@ const Register = ({history}) => {
   }
 
   const handleSubmit = event => {
-    console.log("Submit");
     event.preventDefault();
     if(validateSubmit()){
       registerUser();

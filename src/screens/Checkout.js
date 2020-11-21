@@ -84,7 +84,6 @@ const Checkout = () => {
     event.preventDefault();
     const validate = validateCompleteForm();
     setCompleteForm(validate);
-    console.log(validate);
     setVisitor({
       ...visitor, [event.nativeEvent.target.name]: event.nativeEvent.target.defaultValue 
     });

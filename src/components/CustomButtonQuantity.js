@@ -5,42 +5,45 @@ const CustomButtonQuantity = (props) => {
   const [item, setItem] = useState({
     id: null,
     max: null,
-    min: null,
   });
-  const [contador, setContador] = useState(0);
+  const [counter, setCounter] = useState(1);
 
   useEffect(() => {
     setItem({
       id: props.id,
       max: props.max,
-      min: props.min
     });
   }, [props]);
 
   const incrementItem = () => {
-    const newCount = contador + 1;
+    const newCount = counter + 1;
     if(newCount <= item.max){
-      setContador(newCount);
+      setCounter(newCount);
       props.setCount(newCount);
     }
   }
 
   const decrementItem = () => {
-    const newCount = contador - 1;
-    if(newCount >= item.min){
-      setContador(newCount);
+    const newCount = counter - 1;
+    if(newCount >= 1){
+      setCounter(newCount);
       props.setCount(newCount);
     }
   }
 
   return ( 
     <div className="producto__contador">
-      <button onClick={() => decrementItem()}>-</button>
+      <button 
+        disabled={counter === 1} 
+        onClick={() => decrementItem()}>-</button>
       <span
         className="producto__contador-span">
-        {contador}
+        {counter}
       </span>
-      <button onClick = {() => incrementItem()}>+</button>
+      <button
+        disabled={props.max === counter} 
+        onClick = {() => incrementItem()}
+      >+</button>
     </div>
   );
 }

@@ -14,7 +14,7 @@ const ItemDetail = ({history}) => {
   const cartContext = useContext(CartContext);
 
   const [loading, setLoading] = useState(false);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const [product, setProduct] = useState({});
   const [error, setError] = useState(false);
 
@@ -72,7 +72,6 @@ const ItemDetail = ({history}) => {
                   <div className="producto__comprar">
                     <CustomButtonQuantity
                       max= {product.stock}
-                      min= {0}
                       setCount={setCount}
                     />
                     <button 

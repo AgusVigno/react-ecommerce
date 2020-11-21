@@ -558,6 +558,29 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 1.2rem;
   font-weight: bold;
 }
+.cart__product{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart__product .producto__contador{
+  flex-basis: calc(33.3% - 1rem);
+}
+.cart__product .producto_cuenta{
+  flex-basis: calc(33.3% - 1rem);
+  margin: 0;
+}
+.cart__product .producto__precio{
+  flex-basis: calc(33.3% - 1rem);
+  margin: 0;
+}
+.cart__product .producto_cuenta span{
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.cart__product svg{
+  margin-left: 1rem;
+}
 
 /* Checkout */
 .checkout__container{
@@ -706,6 +729,9 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 2rem;
   padding: 1rem 2rem;
   width: auto;
+}
+.product__detail .producto__data-iconos{
+  display: flex;
 }
 .product__detail .producto__contador-span{
   font-size: 2rem;

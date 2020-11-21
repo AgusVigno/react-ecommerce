@@ -27,6 +27,25 @@ export default function CartProvider({ defaultValue = [], children}){
     setCart([...cart, {...product, count: count}]);
   }
 
+  const updateProductCart = (product, newCount) => {
+    if(isInCart(product && product.id)){
+      setCartSize(cartSize - product.count + newCount);
+      setTotal(total - product.count * product.price + newCount * product.price);
+      setCart(cart.map(p => (p.id === product.id ? 
+        {...p, count: newCount} : p )));
+      return
+    }
+  }
+
+  const deleteProductCart = (product) => {
+    if(isInCart(product && product.id)){
+      setCartSize(cartSize - product.count);
+      setTotal(total - product.count * product.price);
+      setCart(cart.filter(p => p.id !== product.id));
+      return
+    }
+  }
+
   const reset = () => {
     setCart(defaultValue);
     setCartSize(0);
@@ -34,7 +53,8 @@ export default function CartProvider({ defaultValue = [], children}){
   }
 
   return (
-    <CartContext.Provider value={{cart, addToCart, isInCart, cartSize, total, reset}}>
+    <CartContext.Provider 
+      value={{cart, addToCart, isInCart, cartSize, total, reset, updateProductCart, deleteProductCart}}>
       {children}
     </CartContext.Provider>
   )

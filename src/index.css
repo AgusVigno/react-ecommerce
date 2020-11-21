@@ -204,32 +204,34 @@ input[type=number]::-webkit-outer-spin-button {
 .login__redes-btn{
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+.login__redes-btn button{
+  flex-basis: 85%;
+  background-color: #2c3e50;
   color: #FFF;
-  margin: 2.5rem 0 .5rem;
   padding: .5rem;
   font-size: 1.2rem;
-  background-color: #2c3e50;
   text-transform: uppercase;
+  border: none;
 }
-.login__redes-btn:hover{
+.login__redes-btn button:hover{
   font-weight: bold;
   background-color: #1D3B58;
   box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
 }
 .login__redes-btn img{
-  width: 2rem;
-  margin-left: 3rem;
+  width: 3.5rem;
+  padding: .5rem;
+  background-color: transparent;
 }
-.facebook{
-  margin: 0 0 .5rem 0;
+.login__redes-btn.google{
+  margin: 2.5rem 0 0;
 }
-.github{
-  margin: 0 0 .5rem 0;
-}
-.login__redes-btn.github img {
-  width: 3rem;
+.login__redes-btn.github img,
+.login__redes-btn.facebook img{
+  padding: 0;
 }
 
 /* Home */
@@ -565,6 +567,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .cart__product .producto__contador{
   flex-basis: calc(33.3% - 1rem);
+}
+.cart__product .producto__contador span{
+  font-size: 1.5rem;
 }
 .cart__product .producto_cuenta{
   flex-basis: calc(33.3% - 1rem);

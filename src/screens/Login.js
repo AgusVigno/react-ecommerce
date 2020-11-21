@@ -207,24 +207,24 @@ const Login = ({history}) => {
             </Grid>
           </form>
         </div>
-        <button
-          className="login__redes-btn"
-          onClick={onClickLoginWithGoogle}
-        >Login con Google
+        <div className="login__redes-btn google">
+          <button onClick={onClickLoginWithGoogle}>
+            Login con Google
+          </button>
           <img src={iconGoogle} alt="imagen google"/>
-        </button>
-        <button
-          className="login__redes-btn facebook"
-          onClick={onClickLoginWithFacebook}
-        >Login con Facebook
+        </div>
+        <div className="login__redes-btn facebook">
+          <button onClick={onClickLoginWithFacebook}>
+            Login con Facebook
+          </button>
           <img src={iconFacebook} alt="imagen facebook"/>
-        </button>
-        <button
-          className="login__redes-btn github"
-          onClick={onClickLoginWithGithub}
-        >Login con GitHub
+        </div>
+        <div className="login__redes-btn github">
+          <button onClick={onClickLoginWithGithub}>
+            Login con Github
+          </button>
           <img src={iconGithub} alt="imagen github"/>
-        </button>
+        </div>
         <Box mt={8}>
           <Copyright />
         </Box>

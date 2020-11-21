@@ -53,7 +53,7 @@ const Item = ({product, cart, isDetail}) => {
                   </span>
                   <button onClick = {() => incrementItem()}>+</button>
                 </div>
-                <p className="producto_cuenta">{counter} x ${product.price}</p>
+                <p className="producto_cuenta"><span>{counter}</span> x ${product.price}</p>
                 <h2 className="producto__precio">Total:  $ {product.price * counter}</h2>
                 <DeleteIcon htmlColor="red" fontSize="large" onClick={deleteItem}/>
               </div>

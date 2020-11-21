@@ -105,6 +105,7 @@ const Login = ({history}) => {
       setUser(STATE_INITIAL);
       history.push('/');
     } catch (error) {
+      console.log("Error:", error)
       setError("Ocurrió un error");
       setTimeout(() => {
         setError(false)
@@ -120,6 +121,7 @@ const Login = ({history}) => {
       setUser(STATE_INITIAL);
       history.push('/');
     } catch (error) {
+      console.log("Error:", error)
       setError("Ocurrió un error");
       setTimeout(() => {
         setError(false)
@@ -134,6 +136,7 @@ const Login = ({history}) => {
       setUser(STATE_INITIAL);
       history.push('/');
     } catch (error) {
+      console.log("Error:", error)
       setError("Ocurrió un error");
       setTimeout(() => {
         setError(false)

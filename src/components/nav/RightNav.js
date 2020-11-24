@@ -77,7 +77,10 @@ const Submenu = styled.ul`
 const Buttons = styled.li`
   border: 1px solid #FFF;
   border-radius: 1rem;
-  margin: 0 0 0 2rem;
+  margin-top: 1rem;
+  @media (min-width: 768px) {
+    margin: 0 0 0 2rem;    
+  }
   &:hover{
     font-weight: bold;
     border: 2px solid #db3604;
@@ -89,11 +92,16 @@ const Buttons = styled.li`
 
 const Usuario = styled.p`
   font-size: 1.3rem;
-  margin-right: 1rem;
+  @media (min-width: 768px) {
+    margin-right: 1rem;   
+  }
   span{
     font-size: 1.5rem;
-    margin-left: 1rem;
+    @media (min-width: 768px) {
+      margin-left: 1rem;
+    }
   }
+ 
 `;
 
 const RightNav = ({ open }) => {
@@ -141,7 +149,10 @@ const RightNav = ({ open }) => {
       {
         user 
           ? <>
-              <Usuario>Hola: <span>{user.displayName}</span></Usuario>
+              <Usuario>
+                { !open && 'Hola: ' }                
+                <span>{user.displayName}</span>
+              </Usuario>
               <Buttons className="buttons">
                 <Link to={'/login'}
                   onClick={logout}

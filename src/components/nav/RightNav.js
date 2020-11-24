@@ -87,6 +87,15 @@ const Buttons = styled.li`
   }
 `;
 
+const Usuario = styled.p`
+  font-size: 1.3rem;
+  margin-right: 1rem;
+  span{
+    font-size: 1.5rem;
+    margin-left: 1rem;
+  }
+`;
+
 const RightNav = ({ open }) => {
   const {user, firebase} = useContext(FirebaseContext);
   const {categories} = useContext(CategoryContext);
@@ -131,11 +140,14 @@ const RightNav = ({ open }) => {
       <CartIcon />
       {
         user 
-          ? <Buttons className="buttons">
-              <Link to={'/login'}
-                onClick={logout}
-              >Cerrar Sesión</Link>
-            </Buttons>
+          ? <>
+              <Usuario>Hola: <span>{user.displayName}</span></Usuario>
+              <Buttons className="buttons">
+                <Link to={'/login'}
+                  onClick={logout}
+                >Cerrar Sesión</Link>
+              </Buttons>
+            </>
           : <>
               <Buttons className="buttons">
                 <Link to={'/login'}>Iniciar Sesión</Link>

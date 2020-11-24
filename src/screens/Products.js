@@ -1,8 +1,39 @@
 import React, {useEffect, useState, useContext} from 'react';
+import styled from 'styled-components';
 import {CategoryContext} from '../context/categoryContext';
 import firebase, { FirebaseContext } from '../firebase';
 import Layout from '../components/Layout';
 import Error from '../components/Error';
+
+const Titulo = styled.h1`
+  margin-top: 2rem;
+`;
+
+const Formulario = styled.form`
+  width: 95%;
+  margin: 2rem auto;
+  font-size: 1.2rem;
+  @media (min-width: 768px) {
+    width: 60rem;
+    font-size: 1.4rem;
+  }
+  legend{
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  fieldset{
+    margin-bottom: 2rem;
+  }  
+  textarea{
+    width: 100%;
+    height: 12rem;
+  }
+  img{
+    width: 35rem;
+    margin: 1rem auto;
+    max-width: 100%;
+  }
+`;
 
 const Products = ({history}) => {
   const categoryContext = useContext(CategoryContext);
@@ -93,10 +124,8 @@ const Products = ({history}) => {
   return ( 
     <Layout>
       <>
-        <h1 className="titulo">Cargar nuevo producto</h1>
-        <form className="formulario formulario__products"
-          onSubmit={handleSubmit}
-        >
+        <Titulo>Cargar nuevo producto</Titulo>
+        <Formulario onSubmit={handleSubmit}>
           <fieldset>
             <legend>Información General:</legend>
             <div className="campo">
@@ -191,7 +220,7 @@ const Products = ({history}) => {
               type="submit"
               value="Cargar Producto"
             />
-        </form>
+        </Formulario>
       </>
     </Layout>
    );

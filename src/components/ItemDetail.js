@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 import firebase from '../firebase';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
@@ -8,6 +9,28 @@ import Layout from './Layout';
 import Spinner from './Spinner';
 import Item from './Item';
 import CustomButtonQuantity from './CustomButtonQuantity';
+
+const Titulo = styled.h1`
+  margin-top: 2rem;
+`;
+
+const Detalle = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  img{
+    width: 10rem;
+    @media (min-width: 768px) {
+      width: 35rem;
+    }
+  }
+  @media (min-width: 768px) {
+    width: 90rem;
+  }
+`;
 
 const ItemDetail = ({history}) => {
   const { id } = useParams();
@@ -31,7 +54,8 @@ const ItemDetail = ({history}) => {
         }
         return setProduct({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
+          image: `../${doc.data().image}`
         });
       }).catch(error => {
         setError(true);
@@ -53,7 +77,7 @@ const ItemDetail = ({history}) => {
 
   return (
     <Layout>
-      <h1 className="titulo">Detalle del Producto</h1>
+      <Titulo>Detalle del Producto</Titulo>
       {
         loading 
         ? <Spinner /> 
@@ -64,7 +88,7 @@ const ItemDetail = ({history}) => {
                   <ReportProblemOutlinedIcon />
                   <p>No se encontraron productos</p>
                 </div>
-              : <div className="product__detail">
+              : <Detalle className="product__detail">
                   <Item
                     product={product}
                     isDetail={true}
@@ -80,7 +104,7 @@ const ItemDetail = ({history}) => {
                       disabled={count === 0}  
                     >Agregar <AddShoppingCartIcon fontSize="large" /></button>
                   </div>
-                </div>
+                </Detalle>
             }
           </>
       }

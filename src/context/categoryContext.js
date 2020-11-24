@@ -36,8 +36,13 @@ export default function CategoryProvider({ defaultValue = [], children}){
     return category ? category.name : undefined
   }
 
+  const isCategory = categoryKey => {
+    const result = categories.find(category => category.key === categoryKey);
+    return result ? true : false;
+  }
+
   return (
-    <CategoryContext.Provider value={{categories, getCategoryIdByKey, getCategoryNameByKey}}>
+    <CategoryContext.Provider value={{categories, getCategoryIdByKey, getCategoryNameByKey, isCategory}}>
       {children}
     </CategoryContext.Provider>
   )

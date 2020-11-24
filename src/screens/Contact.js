@@ -1,6 +1,6 @@
 import React from 'react';
 import Layout from '../components/Layout';
-
+import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
@@ -25,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const Formulario = styled.form`
+  label{
+    color: #FFF;
+  }
+`;
+
 const Contact = () => {
   const classes = useStyles();
 
@@ -34,7 +40,7 @@ const Contact = () => {
 				<h1 className="contact__titulo">Contacto</h1>
 				<p className="contact__subtitulo">Envianos un mensaje</p>
 				<div className="contact__container">
-            <form className="contact__form"> 
+            <Formulario className="contact__form"> 
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -44,7 +50,7 @@ const Contact = () => {
                     required
                     fullWidth
                     id="name"
-                    label="Nombre"
+                    label="Nombre :)"
                     autoFocus
                     // value={user.name}
                     // onChange={handleChange}
@@ -108,8 +114,8 @@ const Contact = () => {
               {/* {error && <Error message={error} />} */}
        
               <div className="contact__form-newsletter">
-                  <input name="terminos" id="terminos" type="checkbox" />
-                  <label htmlFor="terminos">Deseo recibir el newsletter</label>
+                <input name="terminos" id="terminos" type="checkbox" />
+                <label htmlFor="terminos">Deseo recibir el newsletter</label>
               </div>
               <Button
                 type="submit"
@@ -120,7 +126,7 @@ const Contact = () => {
               >
                 Enviar
               </Button>           
-            </form>
+            </Formulario>
         </div>
 			</main>    
     </Layout>

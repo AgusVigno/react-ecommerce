@@ -2,7 +2,6 @@ import React, {useEffect, useContext} from 'react';
 import { CartContext } from '../../context/cartContext';
 // import { FirebaseContext } from '../../firebase';
 
-
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';

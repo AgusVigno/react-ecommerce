@@ -1,4 +1,5 @@
 import React, {useState, useContext} from 'react';
+import styled from 'styled-components';
 import firebase from '../firebase';
 import { FirebaseContext } from '../firebase';
 import { CartContext } from '../context/cartContext';
@@ -7,6 +8,7 @@ import PaymentForm from '../components/checkout/PaymentForm';
 import Review from '../components/checkout/Review';
 import Layout from '../components/Layout';
 import Copyright from '../components/Copyright';
+
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -58,6 +60,12 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '1rem'
   }
 }));
+
+const Cuenta = styled.span`
+  font-weight: 700;
+  margin-left: 2rem;
+  font-size: 1.6rem;
+`;
 
 const Checkout = () => {
   const classes = useStyles();
@@ -162,7 +170,7 @@ const Checkout = () => {
             user 
               ? (
                 <Typography component="p" align="center" className={classes.account}>
-                  Comprar con la cuenta: {user.email}
+                  Comprar con la cuenta: <Cuenta>{user.email}</Cuenta>
                 </Typography>
               )
               : (

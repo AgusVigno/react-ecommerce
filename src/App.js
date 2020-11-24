@@ -15,6 +15,7 @@ import Cart from './screens/Cart';
 import Checkout from './screens/Checkout';
 import ItemDetail from './components/ItemDetail';
 import Login from './screens/Login';
+import Page404 from './screens/Page404';
 
 function App() { 
   const user = useAutentication();
@@ -40,6 +41,7 @@ function App() {
                 <Route path="/register" component={Register} />
                 <Route path="/login" component={Login} />
                 <Route path="/products" component={Products} />
+                <Route component={Page404} />
               </Switch>
             </Router>
           </CartProvider>

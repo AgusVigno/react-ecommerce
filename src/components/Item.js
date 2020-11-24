@@ -6,6 +6,7 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const Item = ({product, cart, isDetail}) => {
+
   const [counter, setCounter] = useState(cart ? product.count : 1);
   const cartContext = useContext(CartContext);
 

@@ -1,8 +1,29 @@
 import React, {useContext} from 'react';
 import {Link} from 'react-router-dom';
+import styled from 'styled-components';
 import {CartContext} from '../context/cartContext';
 import Layout from '../components/Layout';
 import Item from '../components/Item';
+
+const Listado = styled.ul`
+  width: 50rem;
+  margin: 0 auto;
+  @media (min-width: 768px) {
+    width: 60rem;
+  }
+  .producto__detalle{
+    border: none;
+    border-bottom: 1px solid #e1e1e1;
+    height: 20rem;
+    img{
+      max-height: 100%;
+      padding: 1rem;
+    }
+    &:last-of-type{
+      border: none;
+    }
+  }
+`;
 
 const Cart = () => {
   const cartContext = useContext(CartContext);
@@ -20,7 +41,7 @@ const Cart = () => {
               </button>
             </Link> 
           </>
-        : <ul className="cart__list">
+        : <Listado>
             {
               cartContext.cart.map( product => (
                 <Item 
@@ -35,7 +56,7 @@ const Cart = () => {
                 <button>Checkout</button>
               </Link>
             </div>
-          </ul>
+          </Listado>
       }
     </Layout>
   );

@@ -34,7 +34,7 @@ export default function ProductsProvider({ defaultValue = null, children}){
 
   const getProductsByCategoryKey = categoryKey => {
     const newProducts = products.filter( product => product.categoryId === getCategoryIdByKey(categoryKey) );
-    newProducts.map(product => product.image = `../${product.image}`);
+    newProducts.map(product => product.image.includes("firebasestorage") ? product : product.image = `../${product.image}`);
     return newProducts
   }
 

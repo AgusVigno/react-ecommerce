@@ -5,7 +5,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-const Item = ({product, cart, isDetail}) => {
+const Item = ({product, cart, isDetail, setMessage}) => {
 
   const [counter, setCounter] = useState(cart ? product.count : 1);
   const cartContext = useContext(CartContext);
@@ -27,11 +27,19 @@ const Item = ({product, cart, isDetail}) => {
   }
 
   const addItem = () => {
-      cartContext.addToCart(product, 1);
+    setMessage(true);
+    setTimeout(() => {
+      setMessage(false);
+    }, 2000)
+    cartContext.addToCart(product, 1);
   }
 
   const deleteItem = () => {
-      cartContext.deleteProductCart(product);
+    setMessage(true);
+    setTimeout(() => {
+      setMessage(false);
+    }, 2000)
+    cartContext.deleteProductCart(product);
   }
 
   return (

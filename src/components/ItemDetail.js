@@ -9,6 +9,7 @@ import Layout from './Layout';
 import Spinner from './Spinner';
 import Item from './Item';
 import CustomButtonQuantity from './CustomButtonQuantity';
+import Alerta from '../components/Alerta';
 
 const Titulo = styled.h1`
   margin-top: 2rem;
@@ -25,10 +26,39 @@ const Detalle = styled.div`
     width: 10rem;
     @media (min-width: 768px) {
       width: 35rem;
+      padding: 2rem;
     }
   }
   @media (min-width: 768px) {
     width: 90rem;
+    margin: 2rem auto;
+  }
+`;
+
+const Error = styled.div`
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  svg{
+    font-size: 5rem;
+  }
+  p{
+    font-size: 2rem;
+  }
+`;
+
+const ContenedorAlerta = styled.div`
+  width: 35rem;
+  position: absolute;
+  top: 10rem;
+  right: 20rem;
+  .MuiAlertTitle-root{
+    font-size: 1.6rem;
+  }
+  .MuiAlert-message{
+    font-size: 1.4rem;
   }
 `;
 
@@ -40,6 +70,7 @@ const ItemDetail = ({history}) => {
   const [count, setCount] = useState(1);
   const [product, setProduct] = useState({});
   const [error, setError] = useState(false);
+  const [message, setMessage] = useState(false);
 
   useEffect(() => {
     if(id){
@@ -52,11 +83,9 @@ const ItemDetail = ({history}) => {
           setError(true);
           return
         }
-        return setProduct({
-          id: doc.id,
-          ...doc.data(),
-          image: `../${doc.data().image}`
-        });
+        return doc.data().image.includes("firebasestorage")
+          ? setProduct({id: doc.id, ...doc.data()})
+          : setProduct({id: doc.id, ...doc.data(), image: `../${doc.data().image}`});
       }).catch(error => {
         setError(true);
         console.log("Error: ", error);
@@ -70,8 +99,12 @@ const ItemDetail = ({history}) => {
 
   const toBuy = () => {
     if(count > 0){ 
+      setMessage(true);
+      setTimeout(() => {
+        setMessage(false);
+        history.push('/');
+      }, 2000);
       cartContext.addToCart(product, count);
-      history.push('/');
     }
   }
 
@@ -82,12 +115,23 @@ const ItemDetail = ({history}) => {
         loading 
         ? <Spinner /> 
         : <>
+            { 
+              message && 
+                <ContenedorAlerta>
+                  <Alerta 
+                    type="success"
+                    title="Correcto"
+                    message="Se agregó al carrito de forma"
+                    bold="exitosa!"
+                  />
+                </ContenedorAlerta> 
+            }
             {
               error 
-              ? <div className="products__noproduct">
+              ? <Error>
                   <ReportProblemOutlinedIcon />
                   <p>No se encontraron productos</p>
-                </div>
+                </Error>
               : <Detalle className="product__detail">
                   <Item
                     product={product}

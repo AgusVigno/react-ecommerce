@@ -33,14 +33,14 @@ function App() {
             <Router>
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route path="/contact" component={Contact} />
-                <Route path="/category/:key" component={Category} />
+                <Route exact path="/contact" component={Contact} />
+                <Route exact path="/category/:key" component={Category} />
                 <Route exact path="/cart" component={Cart} />
-                <Route path="/cart/checkout" component={Checkout} />
-                <Route path="/item/:id" component={ItemDetail} />
-                <Route path="/register" component={Register} />
-                <Route path="/login" component={Login} />
-                <Route path="/products" component={Products} />
+                <Route exact path="/cart/checkout" component={Checkout} />
+                <Route exact path="/item/:id" component={ItemDetail} />
+                <Route exact path="/register" component={Register} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/products" component={Products} />
                 <Route component={Page404} />
               </Switch>
             </Router>

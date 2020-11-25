@@ -79,7 +79,7 @@ const Products = ({history}) => {
   const handleSubmit = event => {
     event.preventDefault();
     const empty = validateSubmit();
-    setError(empty > 0);
+    (empty > 0) && setError("Los campos (*) son obligatorios");
     !error && empty === 0 && createProduct();
   }
 
@@ -110,6 +110,10 @@ const Products = ({history}) => {
   }
   
   const createProduct= () => {
+    if(user.uid !== "Z8bcJvkaF8e9lyBDou8sqRB4yHn1"){
+      setError("Se necesita permiso de administrador.")
+      return
+    }
     try {
       console.log("Control de consulta API - Carga Producto");
       firebase.db.collection('products').add(product);
@@ -214,7 +218,7 @@ const Products = ({history}) => {
               />
             </div>
           </fieldset>
-            {error && <Error message={"Los campos (*) son obligatorios"} />}
+            {error && <Error message={error} />}
             <input
               className="formulario__submit"
               type="submit"

@@ -8,6 +8,7 @@ import PaymentForm from '../components/checkout/PaymentForm';
 import Review from '../components/checkout/Review';
 import Layout from '../components/Layout';
 import Copyright from '../components/Copyright';
+import Alerta from '../components/Alerta';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -67,6 +68,19 @@ const Cuenta = styled.span`
   font-size: 1.6rem;
 `;
 
+const ContenedorAlerta = styled.div`
+  width: 35rem;
+  position: absolute;
+  top: 10rem;
+  right: 20rem;
+  .MuiAlertTitle-root{
+    font-size: 1.6rem;
+  }
+  .MuiAlert-message{
+    font-size: 1.4rem;
+  }
+`;
+
 const Checkout = () => {
   const classes = useStyles();
   const {user} = useContext(FirebaseContext);
@@ -87,6 +101,7 @@ const Checkout = () => {
   const [visitor, setVisitor] = useState(STATE_INITIAL);
   const steps = ['Dirección de envío', 'Detalles del pago', 'Revisa tu orden'];
   const [orderId, setOrderId] = useState(null);
+  const [message, setMessage] = useState(false);
 
   const handleBlur = event => {
     event.preventDefault();
@@ -129,6 +144,10 @@ const Checkout = () => {
       setOrderId(response);
       cartContext.reset();
       setActiveStep(3);
+      setMessage(true);
+      setTimeout(() => {
+        setMessage(false);
+      }, 2000);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -186,6 +205,17 @@ const Checkout = () => {
           <>
             {activeStep === steps.length ? (
               <>
+                { 
+                  message && 
+                    <ContenedorAlerta>
+                      <Alerta 
+                        type="success"
+                        title="Correcto"
+                        message="Se realizó la compra de forma"
+                        bold="exitosa!"
+                      />
+                    </ContenedorAlerta> 
+                }
                 <Typography variant="h5" gutterBottom>
                   Muchas Gracias por tu compra.
                 </Typography>

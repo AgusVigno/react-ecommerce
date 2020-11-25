@@ -1,9 +1,10 @@
-import React, {useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 import {CartContext} from '../context/cartContext';
 import Layout from '../components/Layout';
 import Item from '../components/Item';
+import Alerta from '../components/Alerta';
 
 const Listado = styled.ul`
   width: 50rem;
@@ -25,12 +26,37 @@ const Listado = styled.ul`
   }
 `;
 
+const ContenedorAlerta = styled.div`
+  width: 35rem;
+  position: absolute;
+  top: 10rem;
+  right: 20rem;
+  .MuiAlertTitle-root{
+    font-size: 1.6rem;
+  }
+  .MuiAlert-message{
+    font-size: 1.4rem;
+  }
+`;
+
 const Cart = () => {
   const cartContext = useContext(CartContext);
-
+  const [message, setMessage] = useState(false);
+  
   return ( 
     <Layout>
       <h1 className="titulo">Mi Carrito <span>({cartContext.cartSize} productos)</span></h1>
+      { 
+        message && 
+          <ContenedorAlerta>
+            <Alerta 
+              type="success"
+              title="Correcto"
+              message="Se eliminó del carrito de forma"
+              bold="exitosa!"
+            />
+          </ContenedorAlerta> 
+      }
       {
         cartContext.cartSize === 0 
         ? <>
@@ -47,7 +73,9 @@ const Cart = () => {
                 <Item 
                   key={product.id}
                   product={product}
-                  cart={true} />
+                  cart={true} 
+                  setMessage={setMessage}  
+                />
               ))
             }
             <div className="cart__total">

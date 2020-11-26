@@ -50,7 +50,7 @@ const Contact = () => {
                     required
                     fullWidth
                     id="name"
-                    label="Nombre :)"
+                    label="Nombre"
                     autoFocus
                     // value={user.name}
                     // onChange={handleChange}

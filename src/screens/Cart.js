@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {CartContext} from '../context/cartContext';
 import Layout from '../components/Layout';
 import Item from '../components/Item';
-import Alerta from '../components/Alerta';
+import AlertSuccess from '../components/AlertSuccess';
 
 const Listado = styled.ul`
   width: 50rem;
@@ -49,12 +49,7 @@ const Cart = () => {
       { 
         message && 
           <ContenedorAlerta>
-            <Alerta 
-              type="success"
-              title="Correcto"
-              message="Se eliminó del carrito de forma"
-              bold="exitosa!"
-            />
+            <AlertSuccess />
           </ContenedorAlerta> 
       }
       {

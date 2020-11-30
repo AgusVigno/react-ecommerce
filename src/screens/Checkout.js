@@ -8,7 +8,9 @@ import PaymentForm from '../components/checkout/PaymentForm';
 import Review from '../components/checkout/Review';
 import Layout from '../components/Layout';
 import Copyright from '../components/Copyright';
-import Alerta from '../components/Alerta';
+import AlertSuccess from '../components/AlertSuccess';
+import AlertError from '../components/AlertError';
+import Spinner from '../components/Spinner';
 
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -102,6 +104,8 @@ const Checkout = () => {
   const steps = ['Dirección de envío', 'Detalles del pago', 'Revisa tu orden'];
   const [orderId, setOrderId] = useState(null);
   const [message, setMessage] = useState(false);
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleBlur = event => {
     event.preventDefault();
@@ -129,25 +133,40 @@ const Checkout = () => {
   };
 
   const createOrder = async () => {
+    let items = [];
+    cartContext.cart.forEach(item => {
+      const newItem = {
+        id: item.id,
+        count: item.count
+      }
+      items.push(newItem);
+    });
     const order = {
       client: visitor,
       userId: user ? user.uid : '',
-      products: cartContext.cart,
+      products: items,
       countProducts: cartContext.cartSize,
       total: cartContext.total,
       date: new Date(),
     }
     try {
       console.log("Control de consulta API - Crear Orden");
-      const response = (await firebase.db.collection('orders').add(order)).id
-      setVisitor(STATE_INITIAL);
-      setOrderId(response);
-      cartContext.reset();
-      setActiveStep(3);
-      setMessage(true);
-      setTimeout(() => {
-        setMessage(false);
-      }, 2000);
+      const response = (await firebase.db.collection('orders').add(order)).id;
+      const validateStock = updateStock(order.products);
+      if(validateStock){
+        setVisitor(STATE_INITIAL);
+        setOrderId(response);
+        cartContext.reset();
+        setActiveStep(3);
+        setMessage(true);
+        setTimeout(() => {
+          setMessage(false);
+        }, 2000);
+      }else{
+        setTimeout(() => {
+          setError(false);
+        }, 2000);
+      }
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -175,6 +194,32 @@ const Checkout = () => {
       default:
         throw new Error('Etapa desconocida');
     }
+  }
+
+  const updateStock = (products) => {
+    setLoading(true);
+    products.forEach(product => {
+      const item = firebase.db.collection('products').doc(product.id);
+
+      item.get().then(doc => {
+        if(!doc.exists){
+          setError("No existe el producto.");
+          return false;
+        }
+        const stock = doc.data().stock;
+        if(product.count > stock){
+          setError("Stock insuficiente.");
+          return false;
+        }
+        item.update({stock: stock - product.count});
+      }).catch((error) => {
+        console.log("Error: ", error);
+        return false;
+      }).finally(() => {
+        setLoading(false);
+      })
+    });
+    return true;
   }
 
   return (
@@ -208,21 +253,28 @@ const Checkout = () => {
                 { 
                   message && 
                     <ContenedorAlerta>
-                      <Alerta 
-                        type="success"
-                        title="Correcto"
-                        message="Se realizó la compra de forma"
-                        bold="exitosa!"
-                      />
+                      <AlertSuccess />
                     </ContenedorAlerta> 
                 }
-                <Typography variant="h5" gutterBottom>
-                  Muchas Gracias por tu compra.
-                </Typography>
-                <Typography variant="subtitle1" className="cart__order">
-                  Su número de orden de compra es: <span>{orderId}</span>. Hemos enviado la confirmación de su pedido por correo electrónico y
-                  le enviaremos una actualización cuando se haya enviado su pedido.
-                </Typography>
+                { 
+                  error && 
+                    <ContenedorAlerta>
+                      <AlertError />
+                    </ContenedorAlerta> 
+                }
+                {
+                  loading 
+                  ? <Spinner /> 
+                  : <>
+                      <Typography variant="h5" gutterBottom>
+                        Muchas Gracias por tu compra.
+                      </Typography>
+                      <Typography variant="subtitle1" className="cart__order">
+                        Su número de orden de compra es: <span>{orderId}</span>. Hemos enviado la confirmación de su pedido por correo electrónico y
+                        le enviaremos una actualización cuando se haya enviado su pedido.
+                      </Typography>
+                    </>
+                }
               </>
             ) : (
               user 

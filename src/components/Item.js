@@ -1,9 +1,43 @@
 import React, {useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { CartContext } from '../context/cartContext';
 import SearchIcon from '@material-ui/icons/Search';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import DeleteIcon from '@material-ui/icons/Delete';
+
+const Button = styled.button`
+  background-color: transparent;
+  border: none;
+`;
+
+const ImageContainer = styled.div`
+  position: relative;
+`;
+
+const ImageText = styled.p`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: .8rem;
+  background-color: #0D2538;
+  font-weight: bold;
+  opacity: .9;
+  color: white;
+  padding: .5rem;
+`;
+
+const Image = styled.img`
+  width: 16rem;
+  max-width: 100%;
+  flex-basis: calc(50% - 4rem);
+  padding: 2.5rem;
+  margin-bottom: 1rem;
+  @media(min-width: 768px){
+    padding: 0 1rem 0 0;
+  }
+`;
+
 
 const Item = ({product, cart, isDetail, setMessage}) => {
 
@@ -27,6 +61,9 @@ const Item = ({product, cart, isDetail, setMessage}) => {
   }
 
   const addItem = () => {
+    if(product.stock === 0){
+      return
+    }
     setMessage(true);
     setTimeout(() => {
       setMessage(false);
@@ -44,10 +81,13 @@ const Item = ({product, cart, isDetail, setMessage}) => {
 
   return (
     <li className="producto__detalle">
-      <img 
-        src={product.image}
-        alt="imagen de producto"
-      />
+      <ImageContainer>
+        <Image 
+          src={product.image}
+          alt="imagen de producto"
+        />
+        {product.stock === 0 && <ImageText>Agotado</ImageText>}
+      </ImageContainer>
       <div className="producto__info">
         <p className="producto__titulo">{product.name}</p>
         <p className="producto__descripcion">{product.description}</p>
@@ -80,8 +120,16 @@ const Item = ({product, cart, isDetail, setMessage}) => {
                   }
                 </Link>
                 {
-                  !isDetail &&
-                  <AddShoppingCartIcon htmlColor="green"fontSize="large" onClick={addItem}/> 
+                  !isDetail && 
+                    <Button
+                      disabled={product.stock === 0}
+                    >
+                      <AddShoppingCartIcon 
+                        htmlColor="green"
+                        fontSize="large" 
+                        onClick={addItem}
+                      /> 
+                    </Button>
                 }
               </div>
           }

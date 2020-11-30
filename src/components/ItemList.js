@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 import Spinner from './Spinner';
-import Alerta from './Alerta';
+import AlertSuccess from './AlertSuccess';
 
 import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 import { makeStyles } from '@material-ui/core/styles';
@@ -65,12 +65,7 @@ const ItemList = ({products}) => {
             { 
               message && 
                 <ContenedorAlerta>
-                  <Alerta 
-                    type="success"
-                    title="Correcto"
-                    message="Se agregó al carrito de forma"
-                    bold="exitosa!"
-                  />
+                  <AlertSuccess />
                 </ContenedorAlerta> 
             }
             <ul className="products__containter">

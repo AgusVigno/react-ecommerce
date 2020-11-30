@@ -9,7 +9,8 @@ import Layout from './Layout';
 import Spinner from './Spinner';
 import Item from './Item';
 import CustomButtonQuantity from './CustomButtonQuantity';
-import Alerta from '../components/Alerta';
+import AlertSuccess from '../components/AlertSuccess';
+import AlertError from '../components/AlertError';
 
 const Titulo = styled.h1`
   margin-top: 2rem;
@@ -104,7 +105,9 @@ const ItemDetail = ({history}) => {
         setMessage(false);
         history.push('/');
       }, 2000);
-      cartContext.addToCart(product, count);
+      if(product.stock >= count){
+        cartContext.addToCart(product, count);
+      }
     }
   }
 
@@ -118,12 +121,7 @@ const ItemDetail = ({history}) => {
             { 
               message && 
                 <ContenedorAlerta>
-                  <Alerta 
-                    type="success"
-                    title="Correcto"
-                    message="Se agregó al carrito de forma"
-                    bold="exitosa!"
-                  />
+                  {product.stock === 0 ? <AlertError /> : <AlertSuccess />}
                 </ContenedorAlerta> 
             }
             {

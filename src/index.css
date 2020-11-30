@@ -308,18 +308,6 @@ input[type=number]::-webkit-outer-spin-button {
     border-right: none;
   }
 }
-.producto__detalle img{
-  width: 16rem;
-  max-width: 100%;
-  flex-basis: calc(50% - 4rem);
-  padding: 2.5rem;
-  margin-bottom: 1rem;
-}
-@media (min-width: 768px) {
-  .producto__detalle img{
-    padding: 0 1rem 0 0;
-  }
-}
 .producto__info{
   flex: 1;
 }
